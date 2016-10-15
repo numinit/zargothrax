@@ -8,7 +8,8 @@ Rails.application.config.assets.js_compressor = Closure::Compiler.new(
   language_in: 'ECMASCRIPT5_STRICT',
   process_closure_primitives: true,
   only_closure_dependencies: true,
-  closure_entry_point: 'zx'
+  closure_entry_point: 'zx',
+  debug: true
 )
 
 # Add additional assets to the asset load path
@@ -19,4 +20,4 @@ Rails.application.config.assets.paths << vendor_assets
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.debug = false
 Rails.application.config.assets.compress = true
-Rails.application.config.assets.precompile += %w[zx.js zx.css]
+Rails.application.config.assets.precompile += %w[zx.js zx-worker.js zx.css]

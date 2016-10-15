@@ -1,0 +1,15 @@
+goog.require('zx');
+
+(function(top) {
+    var zx = top['zxWorker'];
+
+    if (zx._started) {
+        return;
+    }
+
+    console.log('worker starting');
+
+    var worker = new zx.Worker(top);
+
+    zx._started = true;
+})(this);

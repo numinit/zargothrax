@@ -1,0 +1,19 @@
+goog.require('zx');
+
+(function(top) {
+    var zx = top['zx'];
+
+    if (zx._started) {
+        return;
+    }
+
+    console.log('client starting');
+    var worker = new zx.Runner.Worker('<%= asset_path "zx-worker.js" %>');
+  worker.postWorkUnit('console.log("running..."); console.log(arguments);', {foo: 'bar'}).then(function(data) {
+      console.log('got response to work unit');
+      console.log(data);
+    });
+
+    zx._started = true;
+})(this);
+

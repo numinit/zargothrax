@@ -1,5 +1,4 @@
 goog.provide('zx.Runner');
 
-zx.Runner = function() {
+zx.Runner = function() {};
 
-};

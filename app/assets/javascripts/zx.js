@@ -1,9 +1,10 @@
 //= require_self
-//= require zx/runner
+//= require zx/common/runner
+//= require zx/common/runner/worker-message
+//= require zx/client/runner/worker
+//= require zx/client/boot
 
 goog.provide('zx');
 
-var zx = function() {
-};
+var zx = (this['zx'] = this['zx'] || function() {});
 
-window['zargothrax'] = window['zx'] = zx;
