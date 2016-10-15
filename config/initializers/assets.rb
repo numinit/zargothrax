@@ -8,7 +8,7 @@ Rails.application.config.assets.js_compressor = Closure::Compiler.new(
   language_in: 'ECMASCRIPT5_STRICT',
   process_closure_primitives: true,
   only_closure_dependencies: true,
-  closure_entry_point: 'zargothrax'
+  closure_entry_point: 'zx'
 )
 
 # Add additional assets to the asset load path
