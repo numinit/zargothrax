@@ -1,3 +1,6 @@
 [submodule "vendor/assets/closure-library"]
 	path = vendor/assets/closure-library
 	url = https://github.com/google/closure-library.git
+[submodule "vendor/assets/javascripts/closure-library"]
+	path = vendor/assets/javascripts/closure-library
+	url = https://github.com/google/closure-library.git
