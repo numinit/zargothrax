@@ -1,9 +1,7 @@
 goog.provide('zargothrax');
-goog.require('goog.dom');
 
-var zx = function() {
-
-
+var zargothrax = function() {
 
 };
+
 window['zargothrax'] = window['zx'] = zx;

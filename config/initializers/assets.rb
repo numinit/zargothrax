@@ -12,7 +12,8 @@ Rails.application.config.assets.js_compressor = Closure::Compiler.new(
 )
 
 # Add additional assets to the asset load path
-# Rails.application.config.assets.paths << Emoji.images_path
+vendor_assets = File.realpath(File.join(File.dirname(__FILE__), '..', '..', 'vendor', 'assets'))
+Rails.application.config.assets.paths << vendor_assets
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
