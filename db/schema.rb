@@ -19,21 +19,21 @@ ActiveRecord::Schema.define(version: 20161015053636) do
   create_table "projects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string  "script_name"
     t.integer "timeout"
-    t.uuid    "work_unit_id"
-    t.index ["work_unit_id"], name: "index_projects_on_work_unit_id", using: :btree
   end
 
   create_table "work_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "time_issued", default: '1970-01-01 00:00:00'
+    t.uuid     "work_unit_id"
+    t.datetime "time_issued",  default: '1970-01-01 00:00:00'
     t.json     "result"
     t.binary   "nonce"
+    t.index ["work_unit_id"], name: "index_work_requests_on_work_unit_id", using: :btree
   end
 
   create_table "work_units", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "project_id"
     t.json "arguments"
     t.json "consensus"
-    t.uuid "work_request_id"
-    t.index ["work_request_id"], name: "index_work_units_on_work_request_id", using: :btree
+    t.index ["project_id"], name: "index_work_units_on_project_id", using: :btree
   end
 
 end
