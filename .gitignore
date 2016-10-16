@@ -10,7 +10,7 @@
 
 # Database configuration
 /config/database.yml
-/config/initializers/base-uri.rb
+/config/initializers/base_uri.rb
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

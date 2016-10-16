@@ -10,7 +10,6 @@ goog.require('zx.Context');
     }
 
     // Terrible hack
-    var consoleLogger = console.log;
     console.log = function(str) {
         str = (new Date()).toISOString() + ': ' + str;
         var el = document.getElementById('log');
@@ -22,7 +21,6 @@ goog.require('zx.Context');
                 el.removeChild(el.children[el.children.length - 1]);
             }
         }
-        consoleLogger(str);
     };
 
     console.log('client starting');
