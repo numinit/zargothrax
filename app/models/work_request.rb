@@ -16,6 +16,14 @@ class WorkRequest < ApplicationRecord
     self
   end
 
+  def complete result
+    @readonly = false
+    self.completed = true
+    self.result = result
+    self.save
+    self
+  end
+
   private
   def generate_nonce
     SecureRandom.random_bytes(16)

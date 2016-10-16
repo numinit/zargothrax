@@ -34,6 +34,21 @@ class WorkController < ApplicationController
   end
 
   def submit_work
+    if not (args=params[:params]).is_a?(ActionController::Parameters) or
+       not (id=args[:id]).is_a?(String) or
+       not (nonce_str=args[:nonce]).is_a?(String) or
+       not (nonce=[nonce_str].pack('H*')).bytesize == nonce_str.bytesize / 2 or
+       not (result=args[:result]).is_a?(ActionController::Parameters)
+      render status: 400, json: {error: :BAD_REQUEST}
+      return
+    end
 
+    wr = WorkRequest.where(id: id, nonce: nonce).take
+    if wr.nil?
+      render status: 404, json: {error: :NOT_FOUND}
+    else
+      wr.complete result
+      render status: 202, json: {result: :OK}
+    end
   end
 end

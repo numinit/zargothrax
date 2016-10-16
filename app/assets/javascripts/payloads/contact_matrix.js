@@ -11,11 +11,10 @@ var args = arguments[2];
     // scores between any two residues, generate a mapping relating each pair to
     // a penalty score.
     var createScoringMatrix = function(names, scores) {
-        var mtx = {};
+        var mtx = [];
         for (var i = 0; i < names.length; i++) {
-            mtx[names[i]] = {};
+            mtx[names[i]] = [];
             for (var j = 0; j < names.length; j++) {
-                console.log(i);
                 mtx[names[i]][names[j]] = scores[i][j] || scores[j][i];
             }
         }
@@ -24,9 +23,9 @@ var args = arguments[2];
 
     // Return a protein contact matrix for two amino acid residue sequences.
     var contactMatrix = function(scoringMatrix, thresh, p, q) {
-        var contact = {};
+        var contact = [];
         for (var i = 0; i < p.length; i++) {
-            contact[i] = {};
+            contact[i] = [];
             for (var j = 0; j < q.length; j++) {
                 contact[i][j] = (scoringMatrix[p[i]][q[j]] < thresh) ? 1 : 0;
             }

@@ -12,11 +12,11 @@ zx.Context = function(window, base, workerPath) {
 };
 
 zx.Context.prototype.run = function() {
-    this.getWork();
+    this.doWork();
     return this;
 };
 
-zx.Context.prototype.getWork = function() {
+zx.Context.prototype.doWork = function() {
     var client = this._client;
     var worker = this._worker;
     var failure = function(failedResponse) {
@@ -33,6 +33,15 @@ zx.Context.prototype.getWork = function() {
             worker.postWorkUnit(scriptResponse.getResult(), wu.getArguments()).then(function(workerResponse) {
                 console.log('worker responded');
                 console.log(workerResponse);
+                var workData = {
+                    'id': wu.getId(),
+                    'nonce': wu.getNonce(),
+                    'result': workerResponse.getData().getResult()
+                };
+                client.post('/work/submit', workData).then(function(response) {
+                    console.log('work submission endpoint responded');
+                    console.log(response);
+                }, failure);
             }, function(workerFailure) {
                 failure(workerFailure.getData().toString());
             });

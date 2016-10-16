@@ -24,7 +24,7 @@ zx.HTTPClient.prototype.post = function(uri, data, type) {
     var promise = this.initXHR(xhr, uri, 'POST', type);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     xhr.setRequestHeader('Accept', 'application/json');
-    xhr.send(data);
+    xhr.send(JSON.stringify({'params': data}));
     return promise;
 };
 
