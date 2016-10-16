@@ -9,5 +9,5 @@
 
 goog.provide('zx');
 
-var zx = (this['zx'] = this['zx'] || function() {});
+var zx = (this['ZXClient'] = this['ZXClient'] || function() {});
 

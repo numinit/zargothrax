@@ -1,5 +1,5 @@
 class PageController < ApplicationController
-  def show
-    render :show
+  def home
+    render :home
   end
 end

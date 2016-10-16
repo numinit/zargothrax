@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161016015426) do
+ActiveRecord::Schema.define(version: 20161016093104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,8 +19,9 @@ ActiveRecord::Schema.define(version: 20161016015426) do
   create_table "projects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string  "script_name"
     t.integer "timeout"
-    t.boolean "enabled",     default: true, null: false
-    t.string  "name",                       null: false
+    t.boolean "enabled",      default: true,  null: false
+    t.string  "name",                         null: false
+    t.integer "worker_delay", default: 10000, null: false
   end
 
   create_table "work_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -29,6 +30,8 @@ ActiveRecord::Schema.define(version: 20161016015426) do
     t.jsonb    "result"
     t.binary   "nonce"
     t.boolean  "completed",    default: false,                 null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.index ["work_unit_id"], name: "index_work_requests_on_work_unit_id", using: :btree
   end
 

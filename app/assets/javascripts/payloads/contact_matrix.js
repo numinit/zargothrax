@@ -25,9 +25,9 @@ var args = arguments[2];
     var contactMatrix = function(scoringMatrix, thresh, p, q) {
         var contact = [];
         for (var i = 0; i < p.length; i++) {
-            contact[i] = [];
+            contact[i] = '';
             for (var j = 0; j < q.length; j++) {
-                contact[i][j] = (scoringMatrix[p[i]][q[j]] < thresh) ? 1 : 0;
+                contact[i] += (scoringMatrix[p[i]][q[j]] < thresh) ? 1 : 0;
             }
         }
         return contact;
@@ -67,6 +67,6 @@ var args = arguments[2];
     // This cannot fail
     resolve({
         "name": name,
-        "matrix": contactMatrix(BLOSUM62, -2, seq, seq)
+        "matrix": contactMatrix(BLOSUM62, -3, seq, seq)
     });
 })(resolve, reject, args[0], args[1]);

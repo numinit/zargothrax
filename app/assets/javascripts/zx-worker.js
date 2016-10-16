@@ -7,5 +7,5 @@
 
 goog.provide('zx');
 
-var zx = (this['zxWorker'] = this['zxWorker'] || function() {});
+var zx = (this['ZXWorker'] = this['ZXWorker'] || function() {});
 

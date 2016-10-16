@@ -1,0 +1,11 @@
+body
+  div#container
+    h1
+      | Ferris: Cycles for Fun and Profit
+    div.visualizer
+      - for i in (1..6)
+        div.dataviz
+          div.image
+          div.name
+            | Loading...
+  == javascript_include_tag 'zx-visualize'

@@ -5,23 +5,18 @@ namespace :protein do
 
   desc "Batch n tasks at random from the FASTA data at path. 1 protein per client."
   task :fastabatch, [:n, :path, :timeout] => [:environment] do |t, args|
-
-    #include ProteinCollection
-    #include Protein
-    #include dispatch
-
     proteins = ProteinCollection.new args[:path]
     named_proteins = proteins.toHashBy(:name)
-
-    stamp = Random.new.random_number(1000000000).to_s
-    # XXX Maybe remove stamp once it becomes unnecessary.
-    name  = "fasta_manycontact_#{stamp}"
+    name = "fasta_manycontact_#{Time.now.strftime('%F%m%d_%H%M%S')}"
     script_name = "contact_matrix.js"
     chosen_names = named_proteins.keys.sample(args[:n].to_i) 
     js_args = chosen_names.map{|n| [n, named_proteins[n]]}
 
     # Populate database
-    dispatch(name, "contact_matrix.js", js_args, args[:timeout].to_i)	
+    dispatch(name, "contact_matrix.js", js_args, args[:timeout].to_i)	do |task, i|
+      puts "#{task}: #{i}" if i % 100 == 0
+    end
+    puts "Done"
 
   end
 

@@ -1,15 +1,16 @@
 goog.provide('zx.WorkUnit');
 
-zx.WorkUnit = function(id, script, timeout, nonce, args) {
+zx.WorkUnit = function(id, script, timeout, delay, nonce, args) {
     this._id = id;
     this._script = script;
     this._timeout = timeout;
+    this._delay = delay;
     this._nonce = nonce;
     this._args = args;
 };
 
 zx.WorkUnit.unpack = function(obj) {
-    return new zx.WorkUnit(obj['id'], obj['script'], obj['timeout'], obj['nonce'], obj['arguments']);
+    return new zx.WorkUnit(obj['id'], obj['script'], obj['timeout'], obj['delay'], obj['nonce'], obj['arguments']);
 };
 
 zx.WorkUnit.prototype.getId = function() {
@@ -22,6 +23,10 @@ zx.WorkUnit.prototype.getScript = function() {
 
 zx.WorkUnit.prototype.getTimeout = function() {
     return this._timeout;
+};
+
+zx.WorkUnit.prototype.getDelay = function() {
+    return this._delay;
 };
 
 zx.WorkUnit.prototype.getNonce = function() {

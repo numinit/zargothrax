@@ -1,0 +1,13 @@
+body
+  div#container
+    h1
+      | Ferris: Cycles for Fun and Profit
+    h2 = "Client #{cookies.signed[:zxid]}"
+    h3
+      | Running...
+    p#log
+  style type="text/css"
+    | body {
+    |  background-color: ##{cookies.signed[:zxid].to_s[0...6]} !important;
+    | }
+  == javascript_include_tag 'zx'

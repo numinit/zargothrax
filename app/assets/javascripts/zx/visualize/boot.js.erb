@@ -1,0 +1,17 @@
+goog.require('zx');
+
+goog.require('zx.Visualizer');
+
+(function(top) {
+    var zx = top['ZXVisualize'];
+
+    if (zx._started) {
+        return;
+    }
+
+    console.log('visualize starting');
+    zx._started = true;
+    zx._visualizer = new zx.Visualizer(top, '<%= ApplicationHelper.base_uri %>', 'div#container div.visualizer div.dataviz');
+    zx._visualizer.run();
+})(this);
+

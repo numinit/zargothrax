@@ -56,7 +56,7 @@ zx.HTTPClient.prototype.initXHR = function(xhr, uri, method, type) {
 
 zx.HTTPClient.Response = function(status, statusText, rawResponse, json) {
     this._status = status;
-    this._statusText = statusText;
+    this._statusText = this._status + ' ' + statusText;
 
     if (status < 200 || status > 299) {
         this._error = statusText;
@@ -98,6 +98,14 @@ zx.HTTPClient.Response.prototype.isSuccess = function() {
 
 zx.HTTPClient.Response.prototype.isFailure = function() {
     return !this.isSuccess();
+};
+
+zx.HTTPClient.Response.prototype.getStatusCode = function() {
+    return this._status;
+};
+
+zx.HTTPClient.Response.prototype.getStatusText = function() {
+    return this._statusText;
 };
 
 zx.HTTPClient.Response.prototype.getResult = function() {

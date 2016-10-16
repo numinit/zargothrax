@@ -1,9 +1,5 @@
 class WorkController < ApplicationController
-  before_filter :set_cookie
-
-  def set_cookie
-    cookies.permanent.signed[:zxid] ||= SecureRandom.hex(16)
-  end
+  before_action :set_cookie
 
   def request_work
     # Pick a random enabled project
@@ -24,10 +20,11 @@ class WorkController < ApplicationController
         id: request.id,
         script: ActionController::Base.helpers.asset_path(File.join('payloads', project.script_name)),
         timeout: project.timeout,
+        delay: project.worker_delay,
         arguments: unit.arguments,
         nonce: request.nonce.unpack('H*').first
       }
-      render json: {result: entity}
+      render status: 200, json: {result: entity}
     else
       render status: 408, json: {error: :TRY_AGAIN_LATER}
     end
@@ -50,5 +47,23 @@ class WorkController < ApplicationController
       wr.complete result
       render status: 202, json: {result: :OK}
     end
+  end
+
+  def recent_work
+    if not (limit=params[:limit]).is_a?(String) or
+           (limit=limit.to_i) <= 0
+      render status: 400, json: {error: :BAD_REQUEST}
+      return
+    end
+
+    reqs = WorkRequest.where(completed: true).order(updated_at: :desc).limit(limit).map do |req|
+      {id: req.id, result: req.result}
+    end
+    render status: 200, json: {result: reqs}
+  end
+
+  private
+  def set_cookie
+    cookies.permanent.signed[:zxid] ||= SecureRandom.hex(16)
   end
 end

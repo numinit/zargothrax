@@ -3,11 +3,27 @@ goog.require('zx');
 goog.require('zx.Context');
 
 (function(top) {
-    var zx = top['zx'];
+    var zx = top['ZXClient'];
 
     if (zx._started) {
         return;
     }
+
+    // Terrible hack
+    var log = console.log;
+    console.log = function(str) {
+        str = (new Date()).toISOString() + ': ' + str;
+        var el = document.getElementById('log');
+        if (el) {
+            var child = document.createElement('p');
+            child.textContent = str;
+            el.insertBefore(child, el.children[0]);
+            if (el.children.length > 10) {
+                el.removeChild(el.children[el.children.length - 1]);
+            }
+        }
+        log(str);
+    };
 
     console.log('client starting');
     zx._started = true;
