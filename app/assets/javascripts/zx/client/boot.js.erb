@@ -1,5 +1,7 @@
 goog.require('zx');
 
+goog.require('zx.Context');
+
 (function(top) {
     var zx = top['zx'];
 
@@ -8,12 +10,8 @@ goog.require('zx');
     }
 
     console.log('client starting');
-    var worker = new zx.Runner.Worker('<%= asset_path "zx-worker.js" %>');
-  worker.postWorkUnit('console.log("running..."); console.log(arguments);', {foo: 'bar'}).then(function(data) {
-      console.log('got response to work unit');
-      console.log(data);
-    });
-
     zx._started = true;
+    zx._context = new zx.Context(top, '<%= ApplicationHelper.base_uri %>', '<%= asset_path "zx-worker.js" %>');
+    zx._context.run();
 })(this);
 

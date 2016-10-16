@@ -12,5 +12,8 @@ zx.Evaluator.Block = function(code) {
 };
 
 zx.Evaluator.Block.prototype.call = function(ctx, args) {
-    return this._fn.apply(ctx, args);
+    var fn = this._fn;
+    return new Promise(function(resolve, reject) {
+        fn.call(ctx, resolve, reject, args);
+    });
 };

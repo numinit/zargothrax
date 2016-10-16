@@ -1,5 +1,7 @@
 goog.require('zx');
 
+goog.require('zx.Worker');
+
 (function(top) {
     var zx = top['zxWorker'];
 
@@ -8,8 +10,6 @@ goog.require('zx');
     }
 
     console.log('worker starting');
-
-    var worker = new zx.Worker(top);
-
     zx._started = true;
+    zx._worker = new zx.Worker(top, '<%= ApplicationHelper.base_uri %>');
 })(this);

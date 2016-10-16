@@ -22,14 +22,14 @@ class WorkController < ApplicationController
 
       entity = {
         id: request.id,
-        script: project.script_name,
+        script: ActionController::Base.helpers.asset_path(File.join('payloads', project.script_name)),
         timeout: project.timeout,
         arguments: unit.arguments,
         nonce: request.nonce.unpack('H*').first
       }
       render json: {result: entity}
     else
-      render json: {error: :TRY_AGAIN_LATER}
+      render status: 408, json: {error: :TRY_AGAIN_LATER}
     end
   end
 

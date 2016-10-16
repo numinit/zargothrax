@@ -2,9 +2,10 @@ goog.provide('zx.Runner.Worker');
 
 goog.require('zx.Runner.WorkerMessage');
 
-zx.Runner.Worker = function(file) {
-    this._worker = new Worker(file);
+zx.Runner.Worker = function(uri) {
+    this._worker = new Worker(uri);
     this._worker.addEventListener('message', zx.Runner.Worker.prototype.onResponse_.bind(this));
+    this._workerUri = uri;
     this._inflight = Object.create(null);
 };
 
@@ -26,8 +27,9 @@ zx.Runner.Worker.prototype.onResponse_ = function(ev) {
     var message = zx.Runner.WorkerMessage.unpack(ev.data);
     var inflight = this._inflight[message.getId()];
     if (!inflight) {
-        throw new Error('no inflight message with given ID, this is a bug');
+        throw new Error('no inflight message with given ID `' + message.getId().toString() + '`, this is a bug');
     } else {
+        delete this._inflight[message.getId()];
         if (message.isSuccess()) {
             message.setData(inflight.getUnpack()(message.getData()));
             inflight.resolve(message);

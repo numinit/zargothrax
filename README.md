@@ -16,6 +16,8 @@ Things you may want to cover:
 
 - Configuration
 
+Set up `config/initializers/base_uri.rb` from the provided example.
+
 - Database creation
 
   * Set up postgresql, and configure with user zx\_dev, password zx\_dev
