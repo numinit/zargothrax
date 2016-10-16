@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161015215442) do
+ActiveRecord::Schema.define(version: 20161016010457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20161015215442) do
     t.datetime "time_issued",  default: '1970-01-01 00:00:00'
     t.jsonb    "result"
     t.binary   "nonce"
+    t.boolean  "completed",    default: false,                 null: false
     t.index ["work_unit_id"], name: "index_work_requests_on_work_unit_id", using: :btree
   end
 
