@@ -22,6 +22,19 @@ div#container {
   text-align: center;
 }
 
+div#container a {
+  text-decoration: none;
+  color: #aaa;
+}
+
+div#container a:visited {
+  color: #999;
+}
+
+div#container a:hover {
+  text-decoration: underline;
+}
+
 div#container h1 {
   margin: 0;
   padding: 0 0 0.5em 0;
@@ -40,6 +53,16 @@ div#container h2.aside {
 
 div#container h3 {
   font-size: 1.25em;
+}
+
+div#container hr {
+  border: none;
+  height: 2px;
+  color: #000;
+}
+
+div#container p.authors {
+  bottom: 0;
 }
 
 div#container div.visualizer {

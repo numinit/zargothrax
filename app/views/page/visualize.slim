@@ -3,7 +3,7 @@ body
     h1
       | Ferris: Cycles for Fun and Profit
     div.visualizer
-      - for i in (1..6)
+      - for i in (1..3)
         div.dataviz
           div.image
           div.name
@@ -21,4 +21,9 @@ body
       | in a way they won't mind (or maybe even notice!). By nothing more 
       | than leaving a browser tab open, you could be helping solve a 
       | scientific problem or supporting a website you cherish.
+    hr
+    p.authors
+      | Developed by 
+      a href="https://numin.it" target="_blank" = "Morgan Jones"
+      |  and Andrew Brooks
   == javascript_include_tag 'zx-visualize'

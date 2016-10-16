@@ -6,8 +6,9 @@ body
     h3
       a href='/visualize' = "Visualize the data"
     p#log
-  style type="text/css"
-    | body {
-    |  background-color: ##{cookies.signed[:zxid].to_s[0...6]} !important;
-    | }
+    hr
+    p.authors
+      | Developed by 
+      a href="https://numin.it" target="_blank" = "Morgan Jones"
+      |  and Andrew Brooks
   == javascript_include_tag 'zx'
