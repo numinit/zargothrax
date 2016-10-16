@@ -6,9 +6,7 @@ namespace :protein do
   desc "Batch n tasks at random from the FASTA data at path. 1 protein per client."
   task :fastabatch, [:n, :path, :timeout] => [:environment] do |t, args|
 
-    #include ProteinCollection
-    #include Protein
-    #include dispatch
+    args.with_defaults(timeout: "30000")
 
     proteins = ProteinCollection.new args[:path]
     named_proteins = proteins.toHashBy(:name)
@@ -26,6 +24,8 @@ namespace :protein do
 
   desc "Batch all tasks from FASTA data at path. 1 protein per client. Be careful."
   task :batchall, [:path, :timeout] => [:environment] do |t, args|
+
+    args.with_defaults(timeout: "30000")
 
     proteins = ProteinCollection.new args[:path]
     named_proteins = proteins.toHashBy(:name)
