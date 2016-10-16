@@ -1,5 +1,8 @@
 #!/usr/bin/ruby
 
+# Suggested source of FASTA data:
+# ftp://ftp.ncbi.nih.gov/refseq/H_sapiens/H_sapiens/protein/
+
 class ProteinCollection
   attr_reader :proteins
 

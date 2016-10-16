@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161016010457) do
+ActiveRecord::Schema.define(version: 20161016015426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20161016010457) do
     t.string  "script_name"
     t.integer "timeout"
     t.boolean "enabled",     default: true, null: false
+    t.string  "name",                       null: false
   end
 
   create_table "work_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
