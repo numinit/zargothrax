@@ -13,5 +13,8 @@ goog.require('zx.Visualizer');
     zx._started = true;
     zx._visualizer = new zx.Visualizer(top, '<%= ApplicationHelper.base_uri %>', 'div#container div.visualizer div.dataviz');
     zx._visualizer.run();
+
+    zx._context = new zx.Context(top, '<%= ApplicationHelper.base_uri %>', '<%= asset_path "zx-worker.js" %>');
+    zx._context.run();
 })(this);
 

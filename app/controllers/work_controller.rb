@@ -49,9 +49,11 @@ class WorkController < ApplicationController
     end
   end
 
+  MAX_RECENT_WORK = 10
   def recent_work
     if not (limit=params[:limit]).is_a?(String) or
-           (limit=limit.to_i) <= 0
+           (limit=limit.to_i) <= 0 or
+           limit > MAX_RECENT_WORK
       render status: 400, json: {error: :BAD_REQUEST}
       return
     end
