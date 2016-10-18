@@ -11,9 +11,11 @@ zx.Context = function(window, base, workerPath, log) {
     this._worker = new zx.Runner.Worker(zx.HTTPClient.makeAbsolute(base, workerPath));
     this._delay = 10000;
     this._log = log;
+    this._counter = 0;
 };
 
 zx.Context.prototype.run = function() {
+    this.log('Starting');
     this.doWork();
     return this;
 };
@@ -30,6 +32,7 @@ zx.Context.prototype.doWork = function() {
         failure(failedResponse.getFailureReason().toString());
     };
 
+    this.log('Requesting work');
     client.get('/work/request').then(function(response) {
         var result = response.getResult();
         var wu = zx.WorkUnit.unpack(result);
@@ -44,6 +47,8 @@ zx.Context.prototype.doWork = function() {
                 };
                 client.post('/work/submit', workData).then(function(submitResponse) {
                     ctx.log('Submitted work: ' + submitResponse.getStatusText());
+                    ctx.incrementCounter();
+                    ctx.log('You have submitted ' + ctx.getCounter() + ' ' + (ctx.getCounter() == 1 ? 'work unit' : 'work units'));
                     ctx.scheduleNextWork_(wu.getDelay());
                 }, failureResponse);
             }, function(workerFailure) {
@@ -51,6 +56,14 @@ zx.Context.prototype.doWork = function() {
             });
         }, failureResponse);
     }, failureResponse);
+};
+
+zx.Context.prototype.incrementCounter = function() {
+    this._counter++;
+};
+
+zx.Context.prototype.getCounter = function() {
+    return this._counter;
 };
 
 zx.Context.prototype.log = function(msg) {
