@@ -1,11 +1,14 @@
 goog.provide('zx.Visualizer');
 
-zx.Visualizer = function(window, base, selector) {
+goog.require('zx.BitMatrix');
+
+zx.Visualizer = function(window, base, selector, log) {
     this._window = window;
     this._base = base;
     this._client = new zx.HTTPClient(base);
     this._selector = selector;
     this._delay = 5000;
+    this._log = log;
 };
 
 zx.Visualizer.prototype.run = function() {
@@ -16,7 +19,7 @@ zx.Visualizer.prototype.update = function() {
     var ctx = this;
     var client = this._client;
     var failure = function(failedResponse) {
-        console.log('failed for reason: ' + failedResponse.getFailureReason());
+        ctx.log('failed for reason: ' + failedResponse.getFailureReason());
         ctx.scheduleUpdate_();
     };
     var visualizer = new zx.CanvasVisualizer();
@@ -34,7 +37,7 @@ zx.Visualizer.prototype.update = function() {
             var img = document.createElement('img');
             canvas.width = imageContainer.offsetWidth;
             canvas.height = imageContainer.offsetHeight;
-            visualizer.visualize(result.getResultField('matrix'), canvas);
+            visualizer.visualize(zx.BitMatrix.unpack(result.getResultField('matrix')), canvas);
             img.src = canvas.toDataURL();
 
             while (imageContainer.firstChild) {
@@ -44,9 +47,15 @@ zx.Visualizer.prototype.update = function() {
             nameContainer.textContent = result.getResultField('name');
         }
 
-        console.log('added ' + results.length + ' results');
+        ctx.log('added ' + results.length + ' results');
         ctx.scheduleUpdate_();
     }, failure);
+};
+
+zx.Visualizer.prototype.log = function(msg) {
+    if (typeof(this._log) === 'function') {
+        return this._log('' + msg);
+    }
 };
 
 zx.Visualizer.prototype.scheduleUpdate_ = function() {

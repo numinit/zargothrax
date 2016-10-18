@@ -1,0 +1,9 @@
+(function(top, args) {
+  var resolve = args[0];
+  var reject = args[1];
+  var data = args[2];
+  var base = '<%= ApplicationHelper.base_uri %>';
+
+  var payload = new zx.Payload(top, base);
+  payload.run(resolve, reject, data);
+})(this, arguments);

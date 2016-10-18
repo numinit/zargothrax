@@ -20,4 +20,4 @@ Rails.application.config.assets.paths << vendor_assets
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.debug = false
 Rails.application.config.assets.compress = true
-Rails.application.config.assets.precompile += %w[zx.css zx.js zx-worker.js zx-visualize.js payloads/contact_matrix.js]
+Rails.application.config.assets.precompile += %w[zx.css zx.js zx-worker.js zx-visualize.js payload/contact-matrix.js]

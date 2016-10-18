@@ -18,7 +18,7 @@ class WorkController < ApplicationController
 
       entity = {
         id: request.id,
-        script: ActionController::Base.helpers.asset_path(File.join('payloads', project.script_name)),
+        script: ActionController::Base.helpers.asset_path("#{File.join('payload', project.script_name)}.js"),
         timeout: project.timeout,
         delay: project.worker_delay,
         arguments: unit.arguments,

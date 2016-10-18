@@ -9,7 +9,6 @@ goog.require('zx.Worker');
         return;
     }
 
-    console.log('worker starting');
     zx._started = true;
     zx._worker = new zx.Worker(top, '<%= ApplicationHelper.base_uri %>');
 })(this);

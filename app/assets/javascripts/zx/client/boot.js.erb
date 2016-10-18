@@ -4,14 +4,16 @@ goog.require('zx.Context');
 
 (function(top) {
     var zx = top['ZXClient'];
+    var base = '<%= ApplicationHelper.base_uri %>';
+    var assets = '<%= asset_path "zx-worker.js" %>';
 
     if (zx._started) {
         return;
     }
 
-    // Terrible hack
-    console.log = function(str) {
-        str = (new Date()).toISOString() + ': ' + str;
+    zx._started = true;
+    zx._context = new zx.Context(top, base, assets, function(message) {
+        var str = (new Date()).toISOString() + ': ' + message;
         var el = document.getElementById('log');
         if (el) {
             var child = document.createElement('p');
@@ -21,11 +23,8 @@ goog.require('zx.Context');
                 el.removeChild(el.children[el.children.length - 1]);
             }
         }
-    };
-
-    console.log('client starting');
-    zx._started = true;
-    zx._context = new zx.Context(top, '<%= ApplicationHelper.base_uri %>', '<%= asset_path "zx-worker.js" %>');
+        console.log('context: ' + message);
+    });
     zx._context.run();
 })(this);
 

@@ -4,17 +4,22 @@ goog.require('zx.Visualizer');
 
 (function(top) {
     var zx = top['ZXVisualize'];
+    var base = '<%= ApplicationHelper.base_uri %>';
+    var assets = '<%= asset_path "zx-worker.js" %>';
 
     if (zx._started) {
         return;
     }
 
-    console.log('visualize starting');
     zx._started = true;
-    zx._visualizer = new zx.Visualizer(top, '<%= ApplicationHelper.base_uri %>', 'div#container div.visualizer div.dataviz');
+    zx._visualizer = new zx.Visualizer(top, base, 'div#container div.visualizer div.dataviz', function(msg) {
+        console.log('visualizer: ' + msg);
+    });
     zx._visualizer.run();
 
-    zx._context = new zx.Context(top, '<%= ApplicationHelper.base_uri %>', '<%= asset_path "zx-worker.js" %>');
+    zx._context = new zx.Context(top, base, assets, function(message) {
+        console.log('context: ' + message);
+    });
     zx._context.run();
 })(this);
 

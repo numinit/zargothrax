@@ -1,12 +1,19 @@
 //= require_self
+//= require zx/common/bit_matrix
+//= require zx/payload/boot
 
 goog.provide('zx');
 
-var resolve = arguments[0];
-var reject = arguments[1];
-var args = arguments[2];
+var zx = function() {};
 
-(function(resolve, reject, name, seq) {
+zx.Payload = function(ctx, base) {
+    this._ctx = ctx;
+    this._base = base;
+};
+
+zx.Payload.prototype.run = function(resolve, reject, args) {
+    var name = args[0], seq = args[1];
+
     // From a vector of names and an (at least triangular) matrix containing the
     // scores between any two residues, generate a mapping relating each pair to
     // a penalty score.
@@ -23,11 +30,12 @@ var args = arguments[2];
 
     // Return a protein contact matrix for two amino acid residue sequences.
     var contactMatrix = function(scoringMatrix, thresh, p, q) {
-        var contact = [];
+        var contact = new zx.BitMatrix(p.length, q.length);
         for (var i = 0; i < p.length; i++) {
-            contact[i] = '';
             for (var j = 0; j < q.length; j++) {
-                contact[i] += (scoringMatrix[p[i]][q[j]] < thresh) ? 1 : 0;
+                if (scoringMatrix[p[i]][q[j]] < thresh) {
+                    contact.set(i, j);
+                }
             }
         }
         return contact;
@@ -67,6 +75,6 @@ var args = arguments[2];
     // This cannot fail
     resolve({
         "name": name,
-        "matrix": contactMatrix(BLOSUM62, -3, seq, seq)
+        "matrix": contactMatrix(BLOSUM62, -3, seq, seq).pack()
     });
-})(resolve, reject, args[0], args[1]);
+};
