@@ -3,6 +3,7 @@ class WorkRequest < ApplicationRecord
 
   def expire
     @readonly = false
+    self.lock!
     self.time_issued = Time.at(0)
     self.save
     self
@@ -10,6 +11,7 @@ class WorkRequest < ApplicationRecord
 
   def issue
     @readonly = false
+    self.lock!
     self.time_issued = Time.now.utc
     self.nonce = generate_nonce
     self.save
@@ -18,6 +20,7 @@ class WorkRequest < ApplicationRecord
 
   def complete result
     @readonly = false
+    self.lock!
     self.completed = true
     self.result = result
     self.save

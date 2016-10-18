@@ -12,9 +12,12 @@ class WorkController < ApplicationController
     project = avail.take
     unit = project ? project.work_units.take : nil
     request = unit ? unit.work_requests.take : nil
-    if request
+
+    if request.nil?
+      render status: 408, json: {error: :TRY_AGAIN_LATER}
+    else
       # Issue this request
-      request = request.issue
+      request.issue
 
       entity = {
         id: request.id,
@@ -25,8 +28,6 @@ class WorkController < ApplicationController
         nonce: request.nonce.unpack('H*').first
       }
       render status: 200, json: {result: entity}
-    else
-      render status: 408, json: {error: :TRY_AGAIN_LATER}
     end
   end
 

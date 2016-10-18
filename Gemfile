@@ -17,12 +17,12 @@ gem 'closure-compiler'
 # JSON builder, because whatever
 gem 'jbuilder', '~> 2.5'
 
+# Console
+gem 'pry-rails'
+
 group :development, :test do
   # Development webserver
   gem 'puma', '~> 3.0'
-
-  # Development console
-  gem 'pry-rails'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
