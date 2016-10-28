@@ -1,3 +1,7 @@
+# ferris (zargothrax)
+
+A JavaScript distributed computing system
+
 - System dependencies
 
   On Ubuntu, you will need at least the following:
